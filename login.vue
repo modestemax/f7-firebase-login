@@ -13,8 +13,9 @@
         props: { firebase: { type: Object, required: true }, welcome: String },
         data() {
             return {
-
                 loggedIn: false, //load from cache
+                isNewUser: false,
+                user: null
             }
         },
         computed: {
@@ -25,11 +26,20 @@
         created() {
             this.authProvider.onAuthStateChanged().then(user => {
                 this.loggedIn = !!user;
+                this.user = user
             });
 
         },
         mounted() {
-            this.authProvider.start('#firebaseui-auth-container');
+            if (!this.loggedIn)
+                this.authProvider.start('#firebaseui-auth-container').then(authResult => {
+                    this.loggedIn = true
+                    this.user = authResult.user
+                    this.isNewUser = authResult.additionalUserInfo.isNewUser;
+                    this.$emit('loggedIn', { user: this.user, isNewUser: this.isNewUser })
+                });
+            else
+                this.$nextTick(() => this.$emit('loggedIn', { user: this.user, isNewUser: this.isNewUser }))
         }
     }
 </script>

@@ -28,12 +28,16 @@ export default class AuthProvider {
 
 //
     start() {
-        return this.ui.start('#firebaseui-auth-container', getUiConfig());
+        return new Promise((resolve, reject) => {
+            this.ui.start('#firebaseui-auth-container', getUiConfig((err, authResult) => {
+                err ? reject(err) : resolve(authResult)
+            }));
+        })
     }
 }
 
 
-function getUiConfig() {
+function getUiConfig(callback) {
     // FirebaseUI config.
 
     return {
@@ -42,16 +46,16 @@ function getUiConfig() {
                 // alert('shown')
             },
             signInFailure(error) {
-                alert(error.code)
+                // alert(error.code)
+                callback(error)
             },
             signInSuccessWithAuthResult: (authResult) => {
-                debugger
 
                 const user = authResult.user;
                 const isNewUser = authResult.additionalUserInfo.isNewUser;
 
-                alert(JSON.stringify(user))
-
+                // alert(JSON.stringify(user))
+                callback(null, authResult)
                 // initialize new user
                 if (isNewUser) {
                     // do initialization stuff here (ex. create profile)
