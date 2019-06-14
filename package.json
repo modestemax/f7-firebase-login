@@ -1,0 +1,24 @@
+{
+  "name": "f7FirebaseLogin",
+  "version": "1.0.0",
+  "description": "f7 firebase login component",
+  "main": "AuthProvider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modestemax/f7-firebase-login.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/modestemax/f7-firebase-login/issues"
+  },
+  "homepage": "https://github.com/modestemax/f7-firebase-login#readme",
+  "dependencies": {
+    "firebase": "^6.2.0",
+    "firebaseui": "^4.0.0"
+  }
+}
